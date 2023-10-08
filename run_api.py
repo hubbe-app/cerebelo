@@ -8,11 +8,10 @@ from flask import Flask, jsonify, request
 from langchain.chains import RetrievalQA
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 
-# from langchain.embeddings import HuggingFaceEmbeddings
 from run_localGPT import load_model
 from prompt_template_utils import get_prompt_template
+from flask_cors import CORS
 
-# from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.vectorstores import Chroma
 from werkzeug.utils import secure_filename
 
@@ -30,27 +29,6 @@ logging.info(f"Running on: {DEVICE_TYPE}")
 logging.info(f"Display Source Documents set to: {SHOW_SOURCES}")
 
 EMBEDDINGS = HuggingFaceInstructEmbeddings(model_name=EMBEDDING_MODEL_NAME, model_kwargs={"device": DEVICE_TYPE})
-
-# uncomment the following line if you used HuggingFaceEmbeddings in the ingest.py
-# EMBEDDINGS = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
-# if os.path.exists(PERSIST_DIRECTORY):
-#     try:
-#         shutil.rmtree(PERSIST_DIRECTORY)
-#     except OSError as e:
-#         print(f"Error: {e.filename} - {e.strerror}.")
-# else:
-#     print("The directory does not exist")
-
-# run_langest_commands = ["python", "ingest.py"]
-# if DEVICE_TYPE == "cpu":
-#     run_langest_commands.append("--device_type")
-#     run_langest_commands.append(DEVICE_TYPE)
-
-# result = subprocess.run(run_langest_commands, capture_output=True)
-# if result.returncode != 0:
-#     raise FileNotFoundError(
-#         "No files were found inside SOURCE_DOCUMENTS, please put a starter file inside before starting the API!"
-#     )
 
 # load the vectorstore
 DB = Chroma(
@@ -75,6 +53,7 @@ QA = RetrievalQA.from_chain_type(
 )
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/api/delete_source", methods=["GET"])
@@ -183,4 +162,4 @@ if __name__ == "__main__":
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(filename)s:%(lineno)s - %(message)s", level=logging.INFO
     )
-    app.run(debug=False, port=5110)
+    app.run(debug=False, port=5110, host="0.0.0.0")
