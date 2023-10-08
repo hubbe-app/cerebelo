@@ -19,3 +19,4 @@ RUN --mount=type=cache,target=/root/.cache python ingest.py --device_type $devic
 COPY . .
 ENV device_type=cuda
 CMD python run_localGPT_API.py --device_type $device_type
+EXPOSE 5110
