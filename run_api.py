@@ -55,7 +55,6 @@ QA = RetrievalQA.from_chain_type(
 app = Flask(__name__)
 CORS(app)
 
-
 @app.route("/api/delete_source", methods=["GET"])
 def delete_source_route():
     folder_name = "SOURCE_DOCUMENTS"
