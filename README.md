@@ -9,7 +9,6 @@ This Flask server allows you to manage, process, and query a collection of docum
 - [Setup](#setup)
 - [Running the Server](#running-the-server)
 - [API Endpoints](#api-endpoints)
-- [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 ## Features
