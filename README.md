@@ -29,12 +29,12 @@ This Flask server allows you to manage, process, and query a collection of docum
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/hubbe-app/cerebelo
 ```
 
 2. Navigate to the project directory:
 ```bash
-cd <project-directory>
+cd cerebelo
 ```
 
 3. Install the required packages:
